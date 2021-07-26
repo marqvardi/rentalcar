@@ -1,0 +1,10 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  padding: 50px;
+  justify-content: space-evenly;
+}
+
+.header {
+  text-align: center;
+}

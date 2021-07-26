@@ -1,0 +1,10 @@
+.option {
+  color: white;
+  cursor: pointer;
+}
+
+.photo {
+  max-height: 30px auto;
+  max-width: 30px auto;
+  padding: 5px;
+}

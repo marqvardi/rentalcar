@@ -1,0 +1,9 @@
+.box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.formStyle {
+  min-width: 300px;
+}

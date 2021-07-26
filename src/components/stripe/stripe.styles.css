@@ -1,0 +1,11 @@
+.test-warning {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 20px;
+  color: red;
+  margin-bottom: 100px;
+}
+
+.stripeButton {
+  float: right;
+}

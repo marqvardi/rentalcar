@@ -1,0 +1,14 @@
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.details {
+  flex-direction: column;
+  justify-content: left;
+  font-size: large;
+}
+
+.text {
+  font-size: larger;
+}
