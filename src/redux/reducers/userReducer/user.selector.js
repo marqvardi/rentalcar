@@ -12,7 +12,7 @@ export const checkIfUserIsSignerIn = createSelector(
   (user) => user.isSignedIn
 );
 
-export const checkIfSidebarIsVisible = createSelector(
-  getUser,
-  (user) => user.sideBarVisible
-);
+// export const checkIfSidebarIsVisible = createSelector(
+//   getUser,
+//   (user) => user.sideBarVisible
+// );

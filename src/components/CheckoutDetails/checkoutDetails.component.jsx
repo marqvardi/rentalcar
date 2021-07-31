@@ -11,6 +11,7 @@ const CheckoutDetails = ({
   timeForPickUp,
 }) => {
   const total = days * car.price;
+
   return (
     <div className="main">
       <Grid columns={2} className="text">

@@ -7,13 +7,19 @@ import CarRentingPage from "./pages/carRentingPage/carRentingPage";
 import SignInOrRegisterPage from "./pages/signInOrRegister/signInOrRegisterPage";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userActionTypes } from "./redux/reducers/userReducer/userActionTypes";
 import history from "./util/history";
 import CheckoutPage from "./pages/checkout/checkoutPage";
 
+import "./App.css";
+import SidebarComponent from "../src/components/sidebar/sidebar.component.jsx";
+import { getCurrentUser } from "./redux/reducers/userReducer/user.selector";
+import OrdersPage from "./pages/userOrders/OrdersPage";
+
 const App = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(getCurrentUser);
 
   useEffect(() => {
     var unsubscribeFromAuth = null;
@@ -47,13 +53,20 @@ const App = () => {
       {/* <BrowserRouter> */}
       <Router history={history}>
         <HeaderComponent />
-        <Switch>
-          <Route path="/" component={CarListing} exact />
-          <Route path="/renting/:id" component={CarRentingPage} />
-          <Route path="/signInOrRegister" component={SignInOrRegisterPage} />
-          <Route path="/checkout" component={CheckoutPage} />
-          <CarListing />
-        </Switch>
+        {currentUser && <SidebarComponent />}
+
+        <div className="main">
+          <Switch>
+            {/* <Container className="container"> */}
+            <Route path="/" component={CarListing} exact />
+            <Route path="/renting/:id" component={CarRentingPage} />
+            <Route path="/signInOrRegister" component={SignInOrRegisterPage} />
+            <Route path="/checkout" component={CheckoutPage} />
+            <Route path="/Orders" component={OrdersPage} />
+            {/* <CarListing /> */}
+            {/* </Container> */}
+          </Switch>
+        </div>
 
         {/* </BrowserRouter> */}
         {/* <FooterComponent /> */}

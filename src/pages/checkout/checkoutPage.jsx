@@ -41,7 +41,7 @@ const CheckoutPage = () => {
 
   return (
     <Container>
-      <div style={{ marginTop: "100px" }}>
+      <div style={{ marginTop: "00px" }}>
         {isSignedIn ? <BookTheCar /> : <ReturnToLogin />}
       </div>
     </Container>

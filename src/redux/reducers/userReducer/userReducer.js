@@ -3,6 +3,7 @@ import { userActionTypes } from "./userActionTypes";
 const INITIAL_STATE = {
   currentUser: null,
   isSignedIn: false,
+  isAdmin: false,
 };
 
 const userReducer = (state = INITIAL_STATE, { type, payload }) => {

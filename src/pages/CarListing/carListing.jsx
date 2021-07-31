@@ -5,7 +5,7 @@ import { Button, Container, Grid, Loader } from "semantic-ui-react";
 import "./carListing.styles.css";
 import {
   fetchAllBookingsForAdmin,
-  fetchAllBookingsForUser,
+  FetchAllBookingsForUser,
   fetchCars,
 } from "../../firebase";
 import CarsCard from "../../components/carsCard/carsCard";
@@ -28,15 +28,12 @@ const CarListing = () => {
       setLoading(false);
     }, 3000);
     fetchAllBookingsForAdmin().then((all) => console.log(all));
-    fetchAllBookingsForUser().then((bookings) => {
-      // console.log("All user from listing", bookings)
-      if (auth !== null) {
-        const bookingsFromUser = bookings.filter(
-          (booking) => auth.id === booking.auth.id
-        );
-        console.log(bookingsFromUser);
-      }
-    });
+
+    if (auth !== null) {
+      FetchAllBookingsForUser(auth.id).then((orders) =>
+        console.log("User booking list", orders)
+      );
+    }
 
     return () => {
       dispatch({ type: carActionsType.GET_ALL_CARS, payload: {} });
@@ -49,28 +46,34 @@ const CarListing = () => {
   const renderGrid = (cars) => {
     return (
       <Container className="teste">
-        {BasketHasItem && (
-          <Link to="/checkout">
-            <Button
-              color="yellow"
-              content="Finish your booking here"
-              floated="right"
-              style={{ marginBottom: "15px", color: "black" }}
-            />
-          </Link>
-        )}
-        <Grid columns={4} celled>
-          <Grid.Row>
-            {ArrayCars &&
-              cars.map((car) => (
-                <Grid.Column key={car.id}>
-                  <Link to={`/renting/${car.id}`}>
-                    <CarsCard car={car} />
-                  </Link>
-                </Grid.Column>
-              ))}
-          </Grid.Row>
-        </Grid>
+        <div>
+          {BasketHasItem && (
+            <Link to="/checkout">
+              <Button
+                color="yellow"
+                content="Finish your booking here"
+                floated="right"
+                style={{
+                  marginBottom: "15px",
+                  color: "black",
+                  marginTop: "30px",
+                }}
+              />
+            </Link>
+          )}
+          <Grid columns={4} celled>
+            <Grid.Row>
+              {ArrayCars &&
+                cars.map((car) => (
+                  <Grid.Column key={car.id}>
+                    <Link to={`/renting/${car.id}`}>
+                      <CarsCard car={car} />
+                    </Link>
+                  </Grid.Column>
+                ))}
+            </Grid.Row>
+          </Grid>
+        </div>
       </Container>
     );
   };

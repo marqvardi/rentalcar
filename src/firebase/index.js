@@ -1,5 +1,7 @@
 import { firestore } from "./firebase.utils";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { getCurrentUser } from "../redux/reducers/userReducer/user.selector";
 
 export const fetchCars = async () => {
   const response = await firestore
@@ -42,6 +44,42 @@ export const fetchCar = async (id) => {
 };
 
 //Get all bookings
+
+export const FetchOrders = async (currentUser, isAdmin) => {
+  // const currentUser = useSelector(getCurrentUser);
+  // console.log(currentUser);
+  if (currentUser !== null && isAdmin) {
+    const response = await firestore
+      .collection("bookings")
+      .get()
+      .then((querySnapshot) => {
+        const all = [];
+        querySnapshot.forEach((doc) => {
+          let id = doc.id;
+          all.push({ id, ...doc.data() });
+        });
+        // console.log(all);
+        // need to filter here later based on current.id + isAdmin === true
+        return all;
+      });
+    return response;
+  } else if (currentUser !== null && !isAdmin) {
+    const all = [];
+    await firestore
+      .collection("bookings/")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          let id = doc.id;
+          all.push({ id, ...doc.data() });
+        });
+        // console.log(all);
+      });
+    return all.filter((booking) => currentUser.id === booking.auth.id);
+  }
+  return null;
+};
+
 export const fetchAllBookingsForAdmin = async () => {
   const response = await firestore
     .collection("bookings")
@@ -58,7 +96,7 @@ export const fetchAllBookingsForAdmin = async () => {
   return response;
 };
 
-export const fetchAllBookingsForUser = async () => {
+export const FetchAllBookingsForUser = async (authId) => {
   const all = [];
   await firestore
     .collection("bookings/")
@@ -70,7 +108,7 @@ export const fetchAllBookingsForUser = async () => {
       });
       // console.log(all);
     });
-  return all;
+  return all.filter((booking) => authId === booking.auth.id);
 };
 
 // Creating bookings
@@ -84,6 +122,7 @@ export const createBooking = async (
     .collection("bookings")
     .add({
       auth,
+      active: true,
       orderItem: {
         total: days * car.price,
         datePickUp,
@@ -91,6 +130,7 @@ export const createBooking = async (
         timeForPickUp,
         days,
         car: car,
+        carReturned: false,
       },
     })
     .then(() => {
@@ -124,6 +164,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         email,
         createdAt,
         photoURL: "",
+        isAdmin: true,
       });
     } catch (error) {
       console.log("Error creating user", error.message);
