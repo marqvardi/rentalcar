@@ -5,14 +5,16 @@ import StripeCheckout from "react-stripe-checkout";
 import { toast } from "react-toastify";
 import { Button } from "semantic-ui-react";
 import { createBooking } from "../../firebase";
+import { stripeKey } from "../../keys";
 import { checkoutActionTypes } from "../../redux/reducers/checkoutReducer/checkoutActionTypes";
 import { getCurrentUser } from "../../redux/reducers/userReducer/user.selector";
 import history from "../../util/history";
+
 import "./stripe.styles.css";
 
 const StripeCheckoutButton = ({ price, basketFromRedux }) => {
   const priceForStripe = price * 100;
-  const publishableKey = "pk_test_lzStLCSWOO5IFsQKo1P5SZ2v00BqQVKz5V";
+  const publishableKey = stripeKey;
   // console.log(submitToFirestore);
   const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);

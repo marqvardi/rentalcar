@@ -33,6 +33,7 @@ const orderReducer = (state = INITIAL_VALUE, { type, payload }) => {
         allCompletedOrders: {},
         allActiveOrders: {},
       };
+
     default:
       return state;
   }

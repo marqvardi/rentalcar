@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { carActionsType } from "../../redux/reducers/carsReducer/carActionTypes";
 import { Button, Container, Grid, Loader } from "semantic-ui-react";
 import "./carListing.styles.css";
-import {
-  fetchAllBookingsForAdmin,
-  FetchAllBookingsForUser,
-  fetchCars,
-} from "../../firebase";
+import { fetchCars } from "../../firebase";
 import CarsCard from "../../components/carsCard/carsCard";
 import { Link } from "react-router-dom";
 import { getBasket } from "../../redux/reducers/checkoutReducer/checkout.selector";
@@ -27,13 +23,6 @@ const CarListing = () => {
       });
       setLoading(false);
     }, 3000);
-    fetchAllBookingsForAdmin().then((all) => console.log(all));
-
-    if (auth !== null) {
-      FetchAllBookingsForUser(auth.id).then((orders) =>
-        console.log("User booking list", orders)
-      );
-    }
 
     return () => {
       dispatch({ type: carActionsType.GET_ALL_CARS, payload: {} });

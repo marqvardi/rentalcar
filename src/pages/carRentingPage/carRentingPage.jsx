@@ -19,14 +19,10 @@ import { checkIfUserIsSignerIn } from "../../redux/reducers/userReducer/user.sel
 const CarRentingPage = (props) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  // const car = useSelector((state) => state.cars.car);
   const car = useSelector(fetchSingleCar);
-
-  // const isSignedIn = useSelector((state) => state.user.isSignedIn);
   const isSignedIn = useSelector(checkIfUserIsSignerIn);
 
   useEffect(() => {
-    // console.log(props);
     fetchCar(id).then((car) => {
       dispatch({ type: carActionsType.FETCH_SINGLE_CAR, payload: car });
     });

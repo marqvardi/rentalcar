@@ -1,7 +1,5 @@
 import { firestore } from "./firebase.utils";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { getCurrentUser } from "../redux/reducers/userReducer/user.selector";
 
 export const fetchCars = async () => {
   const response = await firestore
@@ -44,72 +42,43 @@ export const fetchCar = async (id) => {
 };
 
 //Get all bookings
+// export const FetchOrders = async (currentUser, isAdmin, activeOrder) => {
+//   // const currentUser = useSelector(getCurrentUser);
+//   // console.log(currentUser);
+//   if (currentUser !== null && isAdmin) {
+//     await firestore
+//       .collection("bookings")
+//       .get()
+//       .then((querySnapshot) => {
+//         const all = [];
+//         querySnapshot.forEach((doc) => {
+//           let id = doc.id;
+//           all.push({ id, ...doc.data() });
+//         });
+//         // console.log(all);
+//         // need to filter here later based on current.id + isAdmin === true
 
-export const FetchOrders = async (currentUser, isAdmin) => {
-  // const currentUser = useSelector(getCurrentUser);
-  // console.log(currentUser);
-  if (currentUser !== null && isAdmin) {
-    const response = await firestore
-      .collection("bookings")
-      .get()
-      .then((querySnapshot) => {
-        const all = [];
-        querySnapshot.forEach((doc) => {
-          let id = doc.id;
-          all.push({ id, ...doc.data() });
-        });
-        // console.log(all);
-        // need to filter here later based on current.id + isAdmin === true
-        return all;
-      });
-    return response;
-  } else if (currentUser !== null && !isAdmin) {
-    const all = [];
-    await firestore
-      .collection("bookings/")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          let id = doc.id;
-          all.push({ id, ...doc.data() });
-        });
-        // console.log(all);
-      });
-    return all.filter((booking) => currentUser.id === booking.auth.id);
-  }
-  return null;
-};
-
-export const fetchAllBookingsForAdmin = async () => {
-  const response = await firestore
-    .collection("bookings")
-    .get()
-    .then((querySnapshot) => {
-      const all = [];
-      querySnapshot.forEach((doc) => {
-        let id = doc.id;
-        all.push({ id, ...doc.data() });
-      });
-      // console.log(all);
-      return all;
-    });
-  return response;
-};
-
-export const FetchAllBookingsForUser = async (authId) => {
-  const all = [];
-  await firestore
-    .collection("bookings/")
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        let id = doc.id;
-        all.push({ id, ...doc.data() });
-      });
-      // console.log(all);
-    });
-  return all.filter((booking) => authId === booking.auth.id);
-};
+//         return all;
+//       });
+//     // return response;
+//   } else if (currentUser !== null && !isAdmin) {
+//     const all = [];
+//     await firestore
+//       .collection("bookings/")
+//       .get()
+//       .then((querySnapshot) => {
+//         querySnapshot.forEach((doc) => {
+//           let id = doc.id;
+//           all.push({ id, ...doc.data() });
+//         });
+//         // console.log(all);
+//       });
+//     return all.filter(
+//       (booking) =>
+//         currentUser.id === booking.auth.id && booking.active === activeOrder
+//     );
+//   }
+// };
 
 // Creating bookings
 export const createBooking = async (
