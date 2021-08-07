@@ -25,10 +25,10 @@ const SidebarComponent = () => {
         <Icon name="clipboard list" />
         My orders
       </Menu.Item>
-      <Menu.Item>
+      {/* <Menu.Item>
         <Icon name="camera" />
         Channels
-      </Menu.Item>
+      </Menu.Item> */}
     </Sidebar>
   );
 };

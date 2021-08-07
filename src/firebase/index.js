@@ -1,45 +1,46 @@
 import { firestore } from "./firebase.utils";
 import { toast } from "react-toastify";
+import _ from "lodash";
 
-export const fetchCars = async () => {
-  const response = await firestore
-    .collection("cars")
-    .get()
-    .then((snapshot) => {
-      const all = [];
-      snapshot.forEach((doc) => {
-        let id = doc.id;
-        all.push({ id, ...doc.data() });
-        // all.push(doc.id, " => ", doc.data());
-      });
-      // console.log("all", all);
-      return all;
-    });
-  // console.log("response", response);
-  return response;
-};
+// export const fetchCars = async () => {
+//   const response = await firestore
+//     .collection("cars")
+//     .get()
+//     .then((snapshot) => {
+//       const all = [];
+//       snapshot.forEach((doc) => {
+//         let id = doc.id;
+//         all.push({ id, ...doc.data() });
+//         // all.push(doc.id, " => ", doc.data());
+//       });
+//       // console.log("all", all);
+//       return all;
+//     });
+//   // console.log("response", response);
+//   return response;
+// };
 
-export const fetchCar = async (id) => {
-  //   const data = await firestore.collection("cars").doc("ZajYVWjBJmwf3aPZB3hQ");
-  const data = await firestore.collection("cars").doc(id);
+// export const fetchCar = async (id) => {
+//   //   const data = await firestore.collection("cars").doc("ZajYVWjBJmwf3aPZB3hQ");
+//   const data = await firestore.collection("cars").doc(id);
 
-  //Thats for a single document
-  const singleDoc = data
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        // console.log("Document data:", doc.data());
-        return { id, ...doc.data() };
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    })
-    .catch((error) => {
-      console.log("Error getting document:", error);
-    });
-  return singleDoc;
-};
+//   //Thats for a single document
+//   const singleDoc = data
+//     .get()
+//     .then((doc) => {
+//       if (doc.exists) {
+//         // console.log("Document data:", doc.data());
+//         return { id, ...doc.data() };
+//       } else {
+//         // doc.data() will be undefined in this case
+//         console.log("No such document!");
+//       }
+//     })
+//     .catch((error) => {
+//       console.log("Error getting document:", error);
+//     });
+//   return singleDoc;
+// };
 
 //Get all bookings
 // export const FetchOrders = async (currentUser, isAdmin, activeOrder) => {
@@ -98,8 +99,7 @@ export const createBooking = async (
         dateReturn,
         timeForPickUp,
         days,
-        car: car,
-        carReturned: false,
+        car: _.omit(car, ["available"]),
       },
     })
     .then(() => {

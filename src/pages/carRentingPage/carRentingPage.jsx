@@ -15,6 +15,8 @@ import history from "../../util/history";
 import { countDays } from "../../util/countDays";
 import { fetchSingleCar } from "../../redux/reducers/carsReducer/cars.selector";
 import { checkIfUserIsSignerIn } from "../../redux/reducers/userReducer/user.selector";
+import { fetchSingleCarFromFirestore } from "../../firebase/carDataAccess/carDataAccess";
+import _ from "lodash";
 
 const CarRentingPage = (props) => {
   const { id } = useParams();
@@ -23,9 +25,7 @@ const CarRentingPage = (props) => {
   const isSignedIn = useSelector(checkIfUserIsSignerIn);
 
   useEffect(() => {
-    fetchCar(id).then((car) => {
-      dispatch({ type: carActionsType.FETCH_SINGLE_CAR, payload: car });
-    });
+    dispatch(fetchSingleCarFromFirestore(id));
 
     return () => {
       dispatch({ type: carActionsType.FETCH_SINGLE_CAR, payload: {} });
@@ -78,7 +78,7 @@ const CarRentingPage = (props) => {
     // console.log(values);
 
     const bookingDetails = {
-      car: car,
+      car: _.omit(car, ["available"]),
       datePickUp: values.datePickUp,
       dateReturn: values.dateReturn,
       days: Math.trunc(days),

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { checkoutActionTypes } from "./checkoutActionTypes";
 
 const INITIAL_STATE = {
@@ -9,7 +10,7 @@ const checkoutReducer = (state = INITIAL_STATE, { type, payload }) => {
     case checkoutActionTypes.SET_CHECKOUT_DETAILS_FOR_BOOKING:
       return {
         ...state,
-        checkoutBasket: payload,
+        checkoutBasket: _.omit(payload, ["available"]),
       };
     case checkoutActionTypes.CLEAR_CHECKOUT_DETAILS:
       return {

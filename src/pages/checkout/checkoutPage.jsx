@@ -14,6 +14,7 @@ const CheckoutPage = () => {
   const basketFromRedux = useSelector(getBasket);
 
   const BookTheCar = () => {
+    console.log(basketFromRedux);
     // console.log("basketFromRedux from checkouPage", basketFromRedux);
     return (
       <div>

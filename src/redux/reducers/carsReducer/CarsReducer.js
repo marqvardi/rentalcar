@@ -17,10 +17,21 @@ const carsReducer = (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         car: payload,
       };
+    case carActionsType.RETURN_CAR:
+      return {
+        ...state,
+        car: { ...state.car, available: false },
+      };
 
     default:
       return state;
   }
 };
+
+// const returnCarUpdate = async (allCars, carId) => {
+//   return await allCars.map((car) =>
+//     car.id === carId ? { ...car, carAvailable: true } : car
+//   );
+// };
 
 export default carsReducer;

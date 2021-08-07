@@ -1,6 +1,12 @@
 import { orderActionTypes } from "../../redux/reducers/orderReducer/orderActionTypes";
 import { firestore } from "../firebase.utils";
 
+export const ReturningCar = (orderId, carId) => async (dispatch) => {
+  await returnCar(orderId, carId);
+
+  console.log("returning");
+};
+
 export const FetchOrders = (currentUser, isAdmin) => async (dispatch) => {
   const response = await getAllOrderFromFirestore();
 
@@ -51,4 +57,14 @@ const getAllOrderFromFirestore = async () => {
       return allOrders;
     });
   return allOrders;
+};
+
+const returnCar = async (orderId, carId) => {
+  await firestore.collection("bookings").doc(orderId).update({
+    active: false,
+  });
+
+  await firestore.collection("cars").doc(carId).update({
+    available: true,
+  });
 };

@@ -5,6 +5,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { toast } from "react-toastify";
 import { Button } from "semantic-ui-react";
 import { createBooking } from "../../firebase";
+import { updateCarAvailability } from "../../firebase/carDataAccess/carDataAccess";
 import { stripeKey } from "../../keys";
 import { checkoutActionTypes } from "../../redux/reducers/checkoutReducer/checkoutActionTypes";
 import { getCurrentUser } from "../../redux/reducers/userReducer/user.selector";
@@ -24,7 +25,9 @@ const StripeCheckoutButton = ({ price, basketFromRedux }) => {
 
     // Get auth details and Send the booking Details + auth
     try {
+      console.log(basketFromRedux);
       createBooking(currentUser, basketFromRedux);
+      dispatch(updateCarAvailability(basketFromRedux.car.id));
     } catch (error) {
       toast.error(error.message);
     }

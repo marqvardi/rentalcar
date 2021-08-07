@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { userActionTypes } from "./userActionTypes";
 
 const INITIAL_STATE = {
@@ -11,7 +12,7 @@ const userReducer = (state = INITIAL_STATE, { type, payload }) => {
     case userActionTypes.CURRENT_USER:
       return {
         ...state,
-        currentUser: payload,
+        currentUser: _.omit(payload, ["password"]),
         isSignedIn: true,
       };
     case userActionTypes.SIGN_OUT_USER:
@@ -23,7 +24,7 @@ const userReducer = (state = INITIAL_STATE, { type, payload }) => {
     case userActionTypes.UPDATE_USER:
       return {
         ...state,
-        currentUser: payload,
+        currentUser: _.omit(payload, ["password"]),
         isSignedIn: true,
       };
 

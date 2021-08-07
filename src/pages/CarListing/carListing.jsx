@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { getBasket } from "../../redux/reducers/checkoutReducer/checkout.selector";
 import { getCars } from "../../redux/reducers/carsReducer/cars.selector";
 import { getCurrentUser } from "../../redux/reducers/userReducer/user.selector";
+import { fetchCarsFromFirestore } from "../../firebase/carDataAccess/carDataAccess";
 
 const CarListing = () => {
   const dispatch = useDispatch();
@@ -18,9 +19,8 @@ const CarListing = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      fetchCars().then((result) => {
-        dispatch({ type: carActionsType.GET_ALL_CARS, payload: result });
-      });
+      dispatch(fetchCarsFromFirestore());
+
       setLoading(false);
     }, 3000);
 
