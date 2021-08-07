@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CarsCard from "../../components/carsCard/carsCard";
-import { fetchCar } from "../../firebase";
+
 import { carActionsType } from "../../redux/reducers/carsReducer/carActionTypes";
 import { Button, Container, Form, Modal } from "semantic-ui-react";
 import { DateTimePicker, DropdownList } from "react-widgets";
@@ -73,9 +73,12 @@ const CarRentingPage = (props) => {
 
   const onSubmit = async (values) => {
     const days = countDays(values);
-    //   values.dateReturn.getTime() - values.datePickUp.getTime();
-    // const days = differenceInTime / (1000 * 3600 * 24);
-    // console.log(values);
+    // //   values.dateReturn.getTime() - values.datePickUp.getTime();
+    // // const days = differenceInTime / (1000 * 3600 * 24);
+
+    // if (days <= 0) {
+    //   return alert("Days is less or equal to zero");
+    // }
 
     const bookingDetails = {
       car: _.omit(car, ["available"]),
@@ -107,7 +110,6 @@ const CarRentingPage = (props) => {
       <Form.Field>
         <label>Date to pick up your car</label>
         <Field
-          required
           name="datePickUp"
           component={renderDateTimePicker}
           label="Enter a pickup date"

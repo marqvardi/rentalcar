@@ -6,6 +6,7 @@ import "./header.styles.css";
 import history from "../../util/history";
 import { toast } from "react-toastify";
 import { getCurrentUser } from "../../redux/reducers/userReducer/user.selector";
+import _ from "lodash";
 
 const HeaderComponent = () => {
   const currentUser = useSelector(getCurrentUser);
@@ -20,13 +21,15 @@ const HeaderComponent = () => {
 
   return (
     <div>
-      <Menu fixed="top" inverted>
+      <Menu fixed="top" inverted className="navigation">
         <Container>
-          <Link to="/">
-            <Menu.Item header position="left">
-              Home
-            </Menu.Item>
-          </Link>
+          {_.isEmpty(currentUser) && (
+            <Link to="/">
+              <Menu.Item header position="left">
+                Home
+              </Menu.Item>
+            </Link>
+          )}
           {currentUser ? (
             <Menu.Item header position="right" onClick={() => handleSignOut()}>
               Logged as

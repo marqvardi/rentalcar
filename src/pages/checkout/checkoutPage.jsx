@@ -14,7 +14,7 @@ const CheckoutPage = () => {
   const basketFromRedux = useSelector(getBasket);
 
   const BookTheCar = () => {
-    console.log(basketFromRedux);
+    // console.log(basketFromRedux);
     // console.log("basketFromRedux from checkouPage", basketFromRedux);
     return (
       <div>
@@ -25,6 +25,7 @@ const CheckoutPage = () => {
           <div>
             <h2 className="header">Booking details</h2>
             <CheckoutDetails {...basketFromRedux} />
+
             <StripeCheckoutButton
               price={basketFromRedux.car.price * basketFromRedux.days}
               basketFromRedux={basketFromRedux}

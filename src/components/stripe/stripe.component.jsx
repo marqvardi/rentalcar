@@ -42,26 +42,29 @@ const StripeCheckoutButton = ({ price, basketFromRedux }) => {
 
   return (
     <div>
-      <div className="test-warning">
-        * Please use the following test credit card for payments*
-        <br />
-        4242 4242 4242 4242 - Exp- Future date - CVW : 123{" "}
-      </div>
+      {basketFromRedux.days > 0 && (
+        <div className="test-warning">
+          * Please use the following test credit card for payments*
+          <br />
+          4242 4242 4242 4242 - Exp- Future date - CVW : 123{" "}
+        </div>
+      )}
       <div className="stripeButton">
         <Button content="Go back" onClick={history.goBack} color="teal" />
-
-        <StripeCheckout
-          label="Pay now"
-          name="Rental car"
-          billingAddress
-          shippingAddress
-          image="https://svgshare.com/i/CUz.svg"
-          description={`Your total is $${price}`}
-          amount={priceForStripe}
-          panelLabel="Pay now"
-          token={onToken}
-          stripeKey={publishableKey}
-        />
+        {basketFromRedux.days > 0 && (
+          <StripeCheckout
+            label="Pay now"
+            name="Rental car"
+            billingAddress
+            shippingAddress
+            image="https://svgshare.com/i/CUz.svg"
+            description={`Your total is $${price}`}
+            amount={priceForStripe}
+            panelLabel="Pay now"
+            token={onToken}
+            stripeKey={publishableKey}
+          />
+        )}
       </div>
     </div>
   );

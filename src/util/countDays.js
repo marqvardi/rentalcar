@@ -3,5 +3,5 @@ export const countDays = (values) => {
     values.dateReturn.getTime() - values.datePickUp.getTime();
   const days = differenceInTime / (1000 * 3600 * 24);
 
-  return days;
+  return Math.trunc(days);
 };

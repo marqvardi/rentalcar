@@ -1,11 +1,12 @@
 import { orderActionTypes } from "../../redux/reducers/orderReducer/orderActionTypes";
 import { firestore } from "../firebase.utils";
 
-export const ReturningCar = (orderId, carId) => async (dispatch) => {
-  await returnCar(orderId, carId);
-
-  console.log("returning");
-};
+export const ReturningCar =
+  (orderId, carId, currentUser, isAdmin) => async (dispatch) => {
+    await returnCar(orderId, carId);
+    dispatch(FetchOrders(currentUser, isAdmin));
+    console.log("returning");
+  };
 
 export const FetchOrders = (currentUser, isAdmin) => async (dispatch) => {
   const response = await getAllOrderFromFirestore();

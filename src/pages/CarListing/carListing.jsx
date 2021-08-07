@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { carActionsType } from "../../redux/reducers/carsReducer/carActionTypes";
 import { Button, Container, Grid, Loader } from "semantic-ui-react";
 import "./carListing.styles.css";
-import { fetchCars } from "../../firebase";
+
 import CarsCard from "../../components/carsCard/carsCard";
 import { Link } from "react-router-dom";
 import { getBasket } from "../../redux/reducers/checkoutReducer/checkout.selector";
@@ -34,7 +34,7 @@ const CarListing = () => {
 
   const renderGrid = (cars) => {
     return (
-      <Container className="teste">
+      <Container>
         <div>
           {BasketHasItem && (
             <Link to="/checkout">
@@ -50,14 +50,20 @@ const CarListing = () => {
               />
             </Link>
           )}
-          <Grid columns={4} celled>
+          <Grid stackable columns={4} celled>
             <Grid.Row>
               {ArrayCars &&
                 cars.map((car) => (
                   <Grid.Column key={car.id}>
-                    <Link to={`/renting/${car.id}`}>
-                      <CarsCard car={car} />
-                    </Link>
+                    {car.available ? (
+                      <Link to={`/renting/${car.id}`}>
+                        <CarsCard car={car} color="green" />
+                      </Link>
+                    ) : (
+                      <div className="notAvailable">
+                        <CarsCard car={car} color="red" />
+                      </div>
+                    )}
                   </Grid.Column>
                 ))}
             </Grid.Row>

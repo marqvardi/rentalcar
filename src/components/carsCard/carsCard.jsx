@@ -2,12 +2,12 @@ import React from "react";
 import "./carsCard.styles.css";
 import { Card, Icon, Image } from "semantic-ui-react";
 
-const CarsCard = ({ car }) => {
+const CarsCard = ({ car, color }) => {
   const { carMaker, carModel, year, price } = car;
 
   return (
     // <Link to={`/rentCar/${id}`}>
-    <Card>
+    <Card color={color}>
       <Image src={"https://www.carimagery.com/img/v2/12780.jpg"} />
       <Card.Content>
         <Card.Header>{carModel}</Card.Header>

@@ -50,26 +50,29 @@ const App = () => {
 
   return (
     <div>
-      {/* <BrowserRouter> */}
       <Router history={history}>
         <HeaderComponent />
-        {currentUser && <SidebarComponent />}
+        <div className="gridflex">
+          <div className="sidebar">{currentUser && <SidebarComponent />}</div>
 
-        <div className="main">
-          <Switch>
-            {/* <Container className="container"> */}
-            <Route path="/" component={CarListing} exact />
-            <Route path="/renting/:id" component={CarRentingPage} />
-            <Route path="/signInOrRegister" component={SignInOrRegisterPage} />
-            <Route path="/checkout" component={CheckoutPage} />
-            <Route path="/Orders" component={OrdersPage} />
-            {/* <CarListing /> */}
-            {/* </Container> */}
-          </Switch>
+          <div className="main">
+            <Switch>
+              {/* <Container className="container"> */}
+              <Route path="/" component={CarListing} exact />
+              <Route path="/renting/:id" component={CarRentingPage} />
+              <Route
+                path="/signInOrRegister"
+                component={SignInOrRegisterPage}
+              />
+              <Route path="/checkout" component={CheckoutPage} />
+              <Route path="/Orders" component={OrdersPage} />
+              {/* <CarListing /> */}
+              {/* </Container> */}
+            </Switch>
+          </div>
+
+          {/* <FooterComponent /> */}
         </div>
-
-        {/* </BrowserRouter> */}
-        {/* <FooterComponent /> */}
       </Router>
     </div>
   );

@@ -30,7 +30,13 @@ const CheckoutDetails = ({
         </Grid.Column>
 
         <Grid.Column>Number of days</Grid.Column>
-        <Grid.Column>{days}</Grid.Column>
+        {days <= 0 ? (
+          <Grid.Column color="red">
+            Please click "go back" choose a future date
+          </Grid.Column>
+        ) : (
+          <Grid.Column>{days}</Grid.Column>
+        )}
 
         <Grid.Column>Price per day</Grid.Column>
         <Grid.Column>$ {car.price}</Grid.Column>
